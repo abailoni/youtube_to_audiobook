@@ -72,7 +72,7 @@ function download_and_convert_youtube_video () {
 	_youtube_filename=$(youtube-dl --get-filename "${_url}")
 	_cover_jpeg="${_youtube_filename}".jpg
 	_cover="${_cover_jpeg}"
-	_cover_webp="${_youtube_filename}".webp
+	_cover_webp="${_cover_jpeg}".webp
 	_youtube_audio="${_youtube_filename}"-youtube-audio.mp3
 	_audiobook_filename="${_youtube_filename}.mp3"
 
@@ -80,8 +80,8 @@ function download_and_convert_youtube_video () {
 	trap 'rm -f "${_cover_jpeg}"; rm -f "${_cover_webp}"; rm -f "${_youtube_audio}"' RETURN
 
 	# Download thumbnail and audio from given YouTube ${_url}
-	youtube-dl "${_url}" --write-thumbnail --skip-download -o "${_cover}"
-	youtube-dl "${_url}" -x --audio-format mp3 --audio-quality 0 -o "${_youtube_audio}"
+	yt-dlp "${_url}" --write-thumbnail --skip-download -o "${_cover}"
+	yt-dlp "${_url}" -x --audio-format mp3 --audio-quality 0 -o "${_youtube_audio}"
 
 	# Handle special case of the cover not being in standard (read: expected) JPEG format
 	if [ ! -f "${_cover}" ]
